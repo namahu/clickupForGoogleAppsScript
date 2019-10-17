@@ -1,0 +1,13 @@
+{
+  "dependencies": {
+    "@types/google-apps-script": "^0.0.62"
+  },
+  "devDependencies": {
+    "cz-conventional-changelog": "^3.0.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
