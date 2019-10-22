@@ -33,7 +33,7 @@ class Clickup_ {
      * Get a specific list of tasks
      *
      * @param listId - ID of list to get task
-     * @param archived
+     * @param archive - Flag to include archived tasks
      */
     getTasksByListId(listId: string, archived: boolean = false) {
         const path: string = `list/${listId}/task?archived=${archived}`;
