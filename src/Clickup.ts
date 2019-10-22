@@ -1,4 +1,11 @@
-const getClickup = (apiToken: string) => {
+/**
+ * Get Clickup object using Personal API toke.
+ *
+ * @param apiToken - Clickup personal API token
+ * @returns - CLickup object
+ *
+ */
+const getClickup = (apiToken: string): object => {
     return new Clickup_(apiToken);
 };
 
@@ -11,6 +18,13 @@ class Clickup_ {
 
     baseURL: string = 'https://api.clickup.com/api/v2/';
 
+    /**
+     * Function that connects base url and path
+     *
+     * @param path - the path to API
+     * @returns - Created endpoint
+     *
+     */
     createEndpoint_(path: string): string {
         return `${this.baseURL}${path}`;
     }
@@ -18,7 +32,7 @@ class Clickup_ {
     /**
      * Get a specific list of tasks
      *
-     * @param listId
+     * @param listId - ID of list to get task
      * @param archived
      */
     getTasksByListId(listId: string, archived: boolean = false) {
