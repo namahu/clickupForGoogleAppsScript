@@ -11,13 +11,12 @@ export const getClickup = (apiToken: string): Clickup_ => {
   return new Clickup_(apiToken);
 };
 
-class Clickup_ {
-  private readonly apiToken: string;
-  Teams: Teams;
+export class Clickup_ {
+  readonly apiToken: string;
+  Teams: Teams = new Teams(this);
 
   constructor(apiToken: string) {
     this.apiToken = apiToken;
-    this.Teams = new Teams(this.apiToken);
   }
 
   baseURL: string = "https://api.clickup.com/api/v2/";
