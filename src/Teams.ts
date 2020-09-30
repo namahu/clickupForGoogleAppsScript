@@ -1,11 +1,21 @@
-import { ClickupTeam, ClickupTeams } from "types";
+import { Clickup_ } from "Clickup";
+import { TeamMember } from "types";
 import ClickupRequest_ from "./Request";
 
-export default class Teams {
-  private readonly apiToken: string;
+export interface ClickupTeam {
+  id: string;
+  name: string;
+  color: string;
+  avatar: string;
+  members: TeamMember[];
+}
 
-  constructor(apiToken: string) {
-    this.apiToken = apiToken;
+export default class Teams {
+  clickupClient: Clickup_;
+  clickupTeams: ClickupTeam[];
+
+  constructor(clickupClient: Clickup_) {
+    this.clickupClient = clickupClient;
   }
 
   /**
@@ -14,8 +24,11 @@ export default class Teams {
    * @returns Object of the acquired team.
    */
   public getTeams(): ClickupTeam[] {
-    const request: ClickupRequest_ = new ClickupRequest_("team", this.apiToken);
-    const result: ClickupTeams = request.get_();
-    return result.teams;
+    const request: ClickupRequest_ = new ClickupRequest_(
+      "team",
+      this.clickupClient.apiToken
+    );
+    this.clickupTeams = request.get_();
+    return this.clickupTeams;
   }
 }
