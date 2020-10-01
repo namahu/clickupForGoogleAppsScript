@@ -1,19 +1,21 @@
-const getTasksByListId_ = (request) => {
+import ClickupRequest_ from "Request";
+
+export const getTasksByListId_ = (request: ClickupRequest_, path: string) => {
+  return request.get_(path);
+};
+
+export const getTaskByTaskId_ = (request) => {
   return request.get_();
 };
 
-const getTaskByTaskId_ = (request) => {
-  return request.get_();
-};
-
-const createTaskInList_ = (request, payLoad) => {
+export const createTaskInList_ = (request, payLoad) => {
   return request.post_(payLoad);
 };
 
-const updateTaskByTaskId_ = (request, payLoad) => {
+export const updateTaskByTaskId_ = (request, payLoad) => {
   return request.put_(payLoad);
 };
 
-const deleteTaskByTaskId_ = (request) => {
+export const deleteTaskByTaskId_ = (request) => {
   return request.delete_();
 };

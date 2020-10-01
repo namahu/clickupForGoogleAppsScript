@@ -12,14 +12,16 @@ export const getClickup = (apiToken: string): Clickup_ => {
 };
 
 export class Clickup_ {
-  readonly apiToken: string;
+  private readonly apiToken: string;
+  private baseURL: string = "https://api.clickup.com/api/v2/";
+  private request: ClickupRequest_;
+
   Teams: Teams = new Teams(this);
 
   constructor(apiToken: string) {
     this.apiToken = apiToken;
+    this.request = new ClickupRequest_(this.baseURL, apiToken);
   }
-
-  baseURL: string = "https://api.clickup.com/api/v2/";
 
   /**
    * Get a specific list of tasks
@@ -29,31 +31,26 @@ export class Clickup_ {
    */
   getTasksByListId(listId: string, archived: boolean = false) {
     const path: string = `list/${listId}/task?archived=${archived}`;
-    const request = new ClickupRequest_(path, this.apiToken);
-    return getTasksByListId_(request);
+    return this.request.get_(path);
   }
 
   getTaskByTaskId(taskId: string) {
     const path: string = `task/${taskId}`;
-    const request = new ClickupRequest_(path, this.apiToken);
-    return getTaskByTaskId_(request);
+    return this.request.get_(path);
   }
 
   createTaskInList(listId: string, payLoad) {
     const path: string = `list/${listId}/task`;
-    const request = new ClickupRequest_(path, this.apiToken);
-    return createTaskInList_(request, payLoad);
+    return this.request.post_(payLoad, path);
   }
 
   updateTaskByTaskId(taskId: string, payLoad) {
     const path: string = `task/${taskId}`;
-    const request = new ClickupRequest_(path, this.apiToken);
-    return updateTaskByTaskId_(request, payLoad);
+    return this.request.put_(payLoad, path);
   }
 
   deleteTaskByTaskId(taskId: string) {
     const path: string = `task/${taskId}`;
-    const request = new ClickupRequest_(path, this.apiToken);
-    return deleteTaskByTaskId_(request);
+    return this.request.delete_(path);
   }
 }

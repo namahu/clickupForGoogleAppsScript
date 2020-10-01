@@ -6,27 +6,19 @@ interface Options {
     "Content-Type": string;
     Authorization: string;
   };
+  contentType: string;
   payload?: string;
   muteHttpExceptions: boolean;
 }
 
 export default class ClickupRequest_ {
-  apiToken: string;
-  options: Options;
-  path: string;
+  private readonly apiToken: string;
+  private readonly baseURL: string;
 
-  constructor(path: string, apiToken: string, options?: Options) {
-    this.path = path;
-    this.options = options || {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: apiToken,
-      },
-      muteHttpExceptions: true,
-    };
+  constructor(baseURL: string, apiToken: string) {
+    this.apiToken = apiToken;
+    this.baseURL = baseURL;
   }
-
-  private baseURL: string = "https://api.clickup.com/api/v2/";
 
   /**
    * Function that connects base url and path
@@ -39,10 +31,17 @@ export default class ClickupRequest_ {
     return `${this.baseURL}${path}`;
   }
 
-  get_() {
-    this.options.method = "get";
-    const url: string = this.createEndpoint_(this.path);
-    const response = UrlFetchApp.fetch(url, this.options);
+  get_(path: string) {
+    const options: Options = {
+      headers: {
+        Authorization: this.apiToken,
+        "Content-Type": "application/json",
+      },
+      contentType: "application/json",
+      muteHttpExceptions: true,
+    };
+    const url: string = this.createEndpoint_(path);
+    const response = UrlFetchApp.fetch(url, options);
     const responseObj = JSON.parse(response.getContentText());
 
     if (responseObj.error) {
@@ -52,12 +51,20 @@ export default class ClickupRequest_ {
     return responseObj;
   }
 
-  post_(payLoad) {
-    this.options.method = "post";
-    this.options.payload = JSON.stringify(payLoad);
+  post_(payLoad, path: string) {
+    const options: Options = {
+      method: "post",
+      headers: {
+        Authorization: this.apiToken,
+        "Content-Type": "application/json",
+      },
+      payload: JSON.stringify(payLoad),
+      contentType: "application/json",
+      muteHttpExceptions: true,
+    };
 
-    const url: string = this.createEndpoint_(this.path);
-    const response = UrlFetchApp.fetch(url, this.options);
+    const url: string = this.createEndpoint_(path);
+    const response = UrlFetchApp.fetch(url, options);
     const responseObj = JSON.parse(response.getContentText());
 
     if (responseObj.error) {
@@ -67,12 +74,20 @@ export default class ClickupRequest_ {
     return responseObj;
   }
 
-  put_(payLoad) {
-    this.options.method = "put";
-    this.options.payload = JSON.stringify(payLoad);
+  put_(payLoad, path: string) {
+    const options: Options = {
+      method: "post",
+      headers: {
+        Authorization: this.apiToken,
+        "Content-Type": "application/json",
+      },
+      payload: JSON.stringify(payLoad),
+      contentType: "application/json",
+      muteHttpExceptions: true,
+    };
 
-    const url: string = this.createEndpoint_(this.path);
-    const response = UrlFetchApp.fetch(url, this.options);
+    const url: string = this.createEndpoint_(path);
+    const response = UrlFetchApp.fetch(url, options);
     const responseObj = JSON.parse(response.getContentText());
 
     if (responseObj.error) {
@@ -82,11 +97,19 @@ export default class ClickupRequest_ {
     return responseObj;
   }
 
-  delete_() {
-    this.options.method = "delete";
+  delete_(path: string) {
+    const options: Options = {
+      method: "delete",
+      headers: {
+        Authorization: this.apiToken,
+        "Content-Type": "application/json",
+      },
+      contentType: "application/json",
+      muteHttpExceptions: true,
+    };
 
-    const url: string = this.createEndpoint_(this.path);
-    const response = UrlFetchApp.fetch(url, this.options);
+    const url: string = this.createEndpoint_(path);
+    const response = UrlFetchApp.fetch(url, options);
     const responseObj = JSON.parse(response.getContentText());
 
     if (responseObj.error) {
