@@ -11,7 +11,7 @@ export const getClickup = (apiToken: string): Clickup_ => {
   return new Clickup_(apiToken);
 };
 
-export class Clickup_ {
+export default class Clickup_ {
   private readonly apiToken: string;
   private baseURL: string = "https://api.clickup.com/api/v2/";
   private request: ClickupRequest_;
