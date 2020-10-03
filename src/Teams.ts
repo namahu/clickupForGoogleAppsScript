@@ -1,4 +1,4 @@
-import { Clickup_ } from "Clickup";
+import Clickup_ from "Clickup";
 import { TeamMember } from "types";
 import ClickupRequest_ from "./Request";
 
@@ -24,11 +24,6 @@ export default class Teams {
    * @returns Object of the acquired team.
    */
   public getTeams(): ClickupTeam[] {
-    const request: ClickupRequest_ = new ClickupRequest_(
-      "team",
-      this.clickupClient.apiToken
-    );
-    this.clickupTeams = request.get_();
-    return this.clickupTeams;
+    return this.clickupClient._request.get_("teams");
   }
 }
