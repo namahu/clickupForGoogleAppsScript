@@ -1,3 +1,4 @@
+import Tasks from "./Tasks";
 import Teams from "./Teams";
 import ClickupRequest_ from "./Request";
 /**
@@ -7,15 +8,16 @@ import ClickupRequest_ from "./Request";
  * @returns - CLickup object
  *
  */
-export const getClickup = (apiToken: string): Clickup_ => {
-  return new Clickup_(apiToken);
+export const getClickup = (apiToken: string): Clickup => {
+  return new Clickup(apiToken);
 };
 
-export default class Clickup_ {
+export default class Clickup {
   readonly apiToken: string;
   private baseURL: string = "https://api.clickup.com/api/v2/";
   _request: ClickupRequest_;
 
+  Tasks: Tasks = new Tasks(this);
   Teams: Teams = new Teams(this);
 
   constructor(apiToken: string) {
