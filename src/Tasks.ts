@@ -1,5 +1,5 @@
 import Clickup from "Clickup";
-import { ClickupTask } from "interfaces/TaskInterfaces";
+import { ClickupTask, ClickupTasks } from "interfaces/TaskInterfaces";
 import ClickupRequest_ from "Request";
 
 export const getTasksByListId_ = (request: ClickupRequest_, path: string) => {
@@ -30,7 +30,11 @@ export default class Tasks {
     this.clickupClient = clickupClient;
   }
 
-  public getTaskByTaskId(id: string): ClickupTask {
-    return this.clickupClient._request.get_(`task/${id}`);
+  public getTaskByTaskId(taskId: string): ClickupTask {
+    return this.clickupClient._request.get_(`task/${taskId}`);
+  }
+
+  public getTasksByListId(listId: string): ClickupTasks {
+    return this.clickupClient._request.get_(`list/${listId}/task`);
   }
 }

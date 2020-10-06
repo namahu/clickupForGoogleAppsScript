@@ -128,3 +128,7 @@ export interface ClickupTask {
   space: Space;
   attachments?: any[];
 }
+
+export interface ClickupTasks {
+  tasks: ClickupTask[];
+}
