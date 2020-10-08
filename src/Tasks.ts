@@ -22,6 +22,9 @@ export const deleteTaskByTaskId_ = (request) => {
   return request.delete_();
 };
 
+/**
+ * The Tasks class wraps Clickup's Tasks API.
+ */
 export default class Tasks {
   clickupClient: Clickup;
   clickupTask: TaskInterfaces.ClickupTask;
@@ -30,6 +33,11 @@ export default class Tasks {
     this.clickupClient = clickupClient;
   }
 
+  /**
+   * A method to create a query string from the object passed as an argument.
+   *
+   * @param queries - The object on which the query ring is based.
+   */
   private _createQueryString(queries: TaskInterfaces.TaskSearchQueries) {
     const keys: string[] = Object.keys(queries);
     return keys
@@ -49,10 +57,21 @@ export default class Tasks {
       .join("&");
   }
 
+  /**
+   * Method to get the task of the ID passed as an argument.
+   *
+   * @param taskId - The ID of the task for which you want to obtain information.
+   */
   public getTaskByTaskId(taskId: string): TaskInterfaces.ClickupTask {
     return this.clickupClient._request.get_(`task/${taskId}`);
   }
 
+  /**
+   * Method to get the tasks included in the list of IDs passed as arguments.
+   *
+   * @param listId - The ID of the list from which you want to get the task.
+   * @param queries - The conditions for refining the tasks to be acquired.
+   */
   public getTasksByListId(
     listId: number,
     queries: TaskInterfaces.TaskSearchQueries = {
