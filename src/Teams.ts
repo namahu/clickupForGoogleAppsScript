@@ -24,6 +24,6 @@ export default class Teams {
    * @returns Object of the acquired team.
    */
   public getTeams(): ClickupTeam[] {
-    return this.clickupClient._request.get_("teams");
+    return this.clickupClient._request.get_("team");
   }
 }
