@@ -1,5 +1,9 @@
 import Clickup from "Clickup";
-import { ClickupTask, ClickupTasks } from "interfaces/TaskInterfaces";
+import {
+  ClickupTask,
+  ClickupTasks,
+  TaskSearchQueries,
+} from "interfaces/TaskInterfaces";
 import ClickupRequest_ from "Request";
 
 export const getTasksByListId_ = (request: ClickupRequest_, path: string) => {
@@ -30,11 +34,37 @@ export default class Tasks {
     this.clickupClient = clickupClient;
   }
 
+  private _createQueryString(queries: TaskSearchQueries) {
+    const keys: string[] = Object.keys(queries);
+    return keys
+      .map((k) => {
+        const value = queries[k];
+        if (Array.isArray(value)) {
+          return value
+            .map((v, i) => {
+              const paramKey: string = encodeURIComponent(`${k}[${i}]`);
+              const paramValue: string = encodeURIComponent(v);
+              return `${paramKey}=${paramValue}`;
+            })
+            .join("&");
+        }
+        return `${k}=${encodeURIComponent(value)}`;
+      })
+      .join("&");
+  }
+
   public getTaskByTaskId(taskId: string): ClickupTask {
     return this.clickupClient._request.get_(`task/${taskId}`);
   }
 
-  public getTasksByListId(listId: string): ClickupTasks {
-    return this.clickupClient._request.get_(`list/${listId}/task`);
+  public getTasksByListId(
+    listId: number,
+    queries: TaskSearchQueries = {
+      archived: false,
+    }
+  ): ClickupTasks {
+    if (!queries.archived) queries.archived = false;
+    const params: string = this._createQueryString(queries);
+    return this.clickupClient._request.get_(`list/${listId}/task?${params}`);
   }
 }

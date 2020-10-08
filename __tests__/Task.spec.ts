@@ -65,13 +65,23 @@ describe("Testing the Tasks class", () => {
 
       expect(mockGet).not.toHaveBeenCalled();
 
-      expect(clickup.Tasks.getTasksByListId("listID")).toEqual({
+      expect(clickup.Tasks.getTasksByListId(111)).toEqual({
         tasks: [expectedValue],
       });
 
       expect(mockGet).toHaveBeenCalled();
     });
 
-    it("Tasks can be obtained by specifying conditions along with List ID.", () => {});
+    it("Tasks can be obtained by specifying conditions along with List ID.", () => {
+      const mockGet = jest
+        .spyOn(Request.prototype, "get_")
+        .mockReturnValue({ tasks: [expectedValue] });
+
+      expect(mockGet).not.toHaveBeenCalled();
+      expect(
+        clickup.Tasks.getTasksByListId(111, { statuses: ["In progress"] })
+      ).toEqual({ tasks: [expectedValue] });
+      expect(mockGet).toHaveBeenCalled();
+    });
   });
 });
