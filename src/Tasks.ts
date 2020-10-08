@@ -1,9 +1,5 @@
 import Clickup from "Clickup";
-import {
-  ClickupTask,
-  ClickupTasks,
-  TaskSearchQueries,
-} from "interfaces/TaskInterfaces";
+import * as TaskInterfaces from "interfaces/TaskInterfaces";
 import ClickupRequest_ from "Request";
 
 export const getTasksByListId_ = (request: ClickupRequest_, path: string) => {
@@ -28,13 +24,13 @@ export const deleteTaskByTaskId_ = (request) => {
 
 export default class Tasks {
   clickupClient: Clickup;
-  clickupTask: ClickupTask;
+  clickupTask: TaskInterfaces.ClickupTask;
 
   constructor(clickupClient: Clickup) {
     this.clickupClient = clickupClient;
   }
 
-  private _createQueryString(queries: TaskSearchQueries) {
+  private _createQueryString(queries: TaskInterfaces.TaskSearchQueries) {
     const keys: string[] = Object.keys(queries);
     return keys
       .map((k) => {
@@ -53,16 +49,16 @@ export default class Tasks {
       .join("&");
   }
 
-  public getTaskByTaskId(taskId: string): ClickupTask {
+  public getTaskByTaskId(taskId: string): TaskInterfaces.ClickupTask {
     return this.clickupClient._request.get_(`task/${taskId}`);
   }
 
   public getTasksByListId(
     listId: number,
-    queries: TaskSearchQueries = {
+    queries: TaskInterfaces.TaskSearchQueries = {
       archived: false,
     }
-  ): ClickupTasks {
+  ): TaskInterfaces.ClickupTasks {
     if (!queries.archived) queries.archived = false;
     const params: string = this._createQueryString(queries);
     return this.clickupClient._request.get_(`list/${listId}/task?${params}`);
