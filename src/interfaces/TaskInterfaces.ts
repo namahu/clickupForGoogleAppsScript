@@ -111,12 +111,36 @@ export interface Space {
   id: string;
 }
 
-export interface ClickupTask {
+export interface CustomeField {
+  id: string;
+  value: string | number;
+}
+
+export interface BaseTask {
+  name: string;
+  description?: string;
+  time_estimate?: number;
+  parent?: any;
+  custom_fields?: CustomeField[];
+}
+
+export interface ClickupTaskPayload extends BaseTask {
+  assignees?: number[];
+  tags?: string[];
+  status?: string;
+  priority?: number;
+  due_date?: number;
+  due_date_time?: boolean;
+  start_date?: number;
+  start_date_time?: boolean;
+  notify_all?: boolean;
+  links_to?: any;
+}
+
+export interface ClickupTask extends BaseTask {
   id: string;
   custom_id?: any;
-  name: string;
   text_content?: string;
-  description?: string;
   status: Status;
   orderindex: string;
   date_created: string;
@@ -128,12 +152,10 @@ export interface ClickupTask {
   watchers?: Watcher[];
   checklists: Checklist[];
   tags: Tag[];
-  parent?: any;
   priority: Priority;
   due_date: string;
   start_date: string;
   points?: any;
-  time_estimate?: any;
   time_spent: number;
   custom_fields?: any[];
   dependencies?: any[];
@@ -150,4 +172,8 @@ export interface ClickupTask {
 
 export interface ClickupTasks {
   tasks: ClickupTask[];
+}
+
+export interface TaskPayLoad extends ClickupTask {
+  
 }

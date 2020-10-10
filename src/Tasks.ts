@@ -58,7 +58,17 @@ export default class Tasks {
   }
 
   /**
-   * Method to get the task of the ID passed as an argument.
+   * The createTaskInList() method creates a new task in the list.
+   * 
+   * @param listId - The ID of the list that creates the task.
+   * @param payload - An object containing information about the task to be created.
+   */
+  public createTaskInList(listId: number, payload: TaskInterfaces.ClickupTaskPayload): TaskInterfaces.ClickupTask {
+    return this.clickupClient._request.post_(payload, `list/${listId}/task/`);
+  }
+
+  /**
+   * The getTaskByTaskId() method retrieves the task with the ID passed as argument.
    *
    * @param taskId - The ID of the task for which you want to obtain information.
    */
@@ -67,7 +77,8 @@ export default class Tasks {
   }
 
   /**
-   * Method to get the tasks included in the list of IDs passed as arguments.
+   * The getTasksByListId() method gets the tasks 
+   * included in the list of IDs passed as arguments.
    *
    * @param listId - The ID of the list from which you want to get the task.
    * @param queries - The conditions for refining the tasks to be acquired.

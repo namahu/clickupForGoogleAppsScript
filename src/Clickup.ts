@@ -1,14 +1,15 @@
 import Tasks from "./Tasks";
 import Teams from "./Teams";
 import ClickupRequest_ from "./Request";
+
 /**
- * Get Clickup object using Personal API toke.
+ * Get Clickup object using Personal API token.
  *
  * @param apiToken - Clickup personal API token
  * @returns - CLickup object
  *
  */
-export const getClickup = (apiToken: string): Clickup => {
+const getClickup = (apiToken: string): Clickup => {
   return new Clickup(apiToken);
 };
 

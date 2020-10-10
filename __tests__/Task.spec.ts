@@ -1,7 +1,7 @@
 import Clickup from "../src/Clickup";
 import Tasks from "../src/Tasks";
 import Request from "../src/Request";
-import { ClickupTask } from "interfaces/TaskInterfaces";
+import { ClickupTask, ClickupTaskPayload } from "interfaces/TaskInterfaces";
 
 const clickup: Clickup = new Clickup("aaa");
 const expectedValue: ClickupTask = {
@@ -82,6 +82,45 @@ describe("Testing the Tasks class", () => {
         clickup.Tasks.getTasksByListId(111, { statuses: ["In progress"] })
       ).toEqual({ tasks: [expectedValue] });
       expect(mockGet).toHaveBeenCalled();
+    });
+  });
+
+  describe("Testing the createTask()", () => {
+    it("This method can create tasks in a specified list.", () => {
+      const mockPost = jest
+        .spyOn(Request.prototype, "post_")
+        .mockReturnValue(expectedValue);
+
+      const payload: ClickupTaskPayload = {
+        "name": "New Task Name",
+        "description": "New Task Description",
+        "assignees": [183],
+        "tags": ["tag name 1"],
+        "status": "Open",
+        "priority": 3,
+        "due_date": 1508369194377,
+        "due_date_time": false,
+        "time_estimate": 8640000,
+        "start_date": 1567780450202,
+        "start_date_time": false,
+        "notify_all": true,
+        "parent": null,
+        "links_to": null,
+        "custom_fields": [
+            {
+                "id": "0a52c486-5f05-403b-b4fd-c512ff05131c",
+                "value": 23
+            },
+            {
+                "id": "03efda77-c7a0-42d3-8afd-fd546353c2f5",
+                "value": "Text field input"
+            }
+        ]
+    }
+
+      expect(mockPost).not.toHaveBeenCalled();
+      expect(clickup.Tasks.createTaskInList(111, payload)).toEqual(expectedValue);
+      expect(mockPost).toHaveBeenCalled();
     });
   });
 });
