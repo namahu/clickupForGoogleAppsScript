@@ -1,5 +1,6 @@
 import Clickup from "Clickup";
 import * as TaskInterfaces from "interfaces/TaskInterfaces";
+import * as ErrorInterfaces from "interfaces/ErrorInterfaces";
 import ClickupRequest_ from "Request";
 
 export const getTasksByListId_ = (request: ClickupRequest_, path: string) => {
@@ -63,7 +64,18 @@ export default class Tasks {
    * @param listId - The ID of the list that creates the task.
    * @param payload - An object containing information about the task to be created.
    */
-  public createTaskInList(listId: number, payload: TaskInterfaces.ClickupTaskPayload): TaskInterfaces.ClickupTask {
+  public createTaskInList(listId: number, taskName: string, option?: TaskInterfaces.ClickupTaskPayload): TaskInterfaces.ClickupTask | ErrorInterfaces.TaskError {
+    if (!taskName) {
+      const taskError: ErrorInterfaces.TaskError = {
+        err: "Task name invalid",
+        ECODE: "INPUT_005"
+      };
+      return taskError;
+    }
+    let payload: TaskInterfaces.ClickupTaskPayload = {
+      name: taskName
+    };
+    if (option) payload = {...payload, ...option};
     return this.clickupClient._request.post_(payload, `list/${listId}/task/`);
   }
 

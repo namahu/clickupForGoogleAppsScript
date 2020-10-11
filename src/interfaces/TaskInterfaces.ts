@@ -117,7 +117,7 @@ export interface CustomeField {
 }
 
 export interface BaseTask {
-  name: string;
+  name?: string;
   description?: string;
   time_estimate?: number;
   parent?: any;
@@ -139,6 +139,7 @@ export interface ClickupTaskPayload extends BaseTask {
 
 export interface ClickupTask extends BaseTask {
   id: string;
+  name: string;
   custom_id?: any;
   text_content?: string;
   status: Status;
