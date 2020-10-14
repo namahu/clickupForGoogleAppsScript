@@ -42,6 +42,7 @@ export default class ClickupRequest_ {
     };
     const url: string = this.createEndpoint_(path);
     const response = UrlFetchApp.fetch(url, options);
+    
     const responseObj = JSON.parse(response.getContentText());
 
     if (responseObj.error) {

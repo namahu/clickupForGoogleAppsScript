@@ -15,7 +15,7 @@ const getClickup = (apiToken: string): Clickup => {
 
 export default class Clickup {
   readonly apiToken: string;
-  private baseURL: string = "https://api.clickup.com/api/v2/";
+  readonly baseURL: string = "https://api.clickup.com/api/v2/";
   _request: ClickupRequest_;
 
   Tasks: Tasks = new Tasks(this);

@@ -105,4 +105,8 @@ export default class Tasks {
     const params: string = this._createQueryString(queries);
     return this.clickupClient._request.get_(`list/${listId}/task?${params}`);
   }
+
+  public updateTask(taskId: string, payload: TaskInterfaces.ClickupTaskPayload): TaskInterfaces.ClickupTask {
+    return this.clickupClient._request.put_(payload, `task/${taskId}`);
+  }
 }
