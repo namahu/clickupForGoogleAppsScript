@@ -1,3 +1,23 @@
+export interface TaskFilteredQueries {
+  page?: number;
+  order_by?: string;
+  reverse?: boolean;
+  subtasks?: boolean;
+  space_ids?: number[];
+  project_ids?: number[];
+  list_ids?: number[];
+  statuses?: string[];
+  include_closed?: boolean;
+  assignees?: number[];
+  tags?: string[];
+  due_date_gt?: number;
+  due_date_lt?: number;
+  date_created_gt?: number;
+  date_created_lt?: number;
+  date_updated_gt?: number;
+  date_updated_lt?: number;
+}
+
 export interface TaskSearchQueries {
   archived?: boolean;
   page?: number;

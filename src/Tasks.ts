@@ -44,13 +44,7 @@ export default class Tasks {
    * @param payload - An object containing information about the task to be created.
    */
   public createTaskInList(listId: number, taskName: string, option?: TaskInterfaces.ClickupTaskPayload): TaskInterfaces.ClickupTask | ErrorInterfaces.TaskError {
-    if (!taskName) {
-      const taskError: ErrorInterfaces.TaskError = {
-        err: "Task name invalid",
-        ECODE: "INPUT_005"
-      };
-      return taskError;
-    }
+    if (!taskName) return { err: "Task name invalid", ECODE: "INPUT_005" };
     let payload: TaskInterfaces.ClickupTaskPayload = {
       name: taskName
     };
@@ -83,6 +77,18 @@ export default class Tasks {
     if (!queries.archived) queries.archived = false;
     const params: string = this._createQueryString(queries);
     return this.clickupClient._request.get_(`list/${listId}/task?${params}`);
+  }
+
+  
+  public getTeamTasks(
+    teamId: number, 
+    filterOptions: TaskInterfaces.TaskFilteredQueries = { page: 0 }
+  ): TaskInterfaces.ClickupTasks | ErrorInterfaces.TaskError {
+    if (!teamId) return { err: "Team id invalid", ECODE: "INPUT_ex0002"};
+    if (!filterOptions) filterOptions.page = 0;
+
+    const params: string = this._createQueryString(filterOptions);
+    return this.clickupClient._request.get_(`team/${teamId}/task?${params}`);
   }
 
   public updateTask(taskId: string, payload: TaskInterfaces.ClickupTaskPayload): TaskInterfaces.ClickupTask {

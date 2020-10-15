@@ -1,6 +1,6 @@
 import Clickup from "../../src/Clickup";
 import Request from "../../src/Request";
-import { ClickupTask, ClickupTaskPayload } from "interfaces/TaskInterfaces";
+import { ClickupTask, ClickupTaskPayload, ClickupTasks, TaskFilteredQueries } from "interfaces/TaskInterfaces";
 import { TaskError } from "interfaces/ErrorInterfaces";
 import MockHTTPResponse from "../Mock/MockHttpResponse";
 
@@ -75,6 +75,7 @@ describe("Testing the Tasks class", () => {
     });
 
     it("Tasks can be retrieved from the List's ID.", () => {
+    
       const actual = clickup.Tasks.getTasksByListId(111);
       const calls: string[][] = mockFetch.mock.calls;
 
@@ -92,6 +93,34 @@ describe("Testing the Tasks class", () => {
       expect(actual).toEqual({ tasks: [expectedValue] });
     });
   });
+
+  describe("Testing the getTeamTasks()", () => {
+    const mockFetch = createMockFetch({ tasks: [expectedValue] });
+    beforeEach(() => {
+      UrlFetchApp.fetch = mockFetch;
+    });
+
+    it("Get Tasks from Team ID", () => {
+      const actual = clickup.Tasks.getTeamTasks(222);
+
+      expect(actual).toEqual({ tasks: [expectedValue]});
+    })
+
+    it("Tasks can be retrieved from team IDs by specifying conditions.", () => {
+      const filterQueries: TaskFilteredQueries = {
+        page: 0,
+        subtasks: true
+      };
+      const actual = clickup.Tasks.getTeamTasks(222, filterQueries);
+      const calls: string[][] = mockFetch.mock.calls;
+
+      expect(calls[0][0]).toContain(`${clickup.baseURL}team/222/task`);
+      expect(calls[0][0]).toContain("page=0");
+      expect(calls[0][0]).toContain("subtasks=true");
+
+      expect(actual).toEqual({ tasks: [expectedValue] });
+    })
+  })
 
   // describe("Testing the createTaskInList()", () => {
   //   const payload: ClickupTaskPayload = {
