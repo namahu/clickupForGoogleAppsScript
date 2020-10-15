@@ -1,27 +1,6 @@
 import Clickup from "Clickup";
 import * as TaskInterfaces from "interfaces/TaskInterfaces";
 import * as ErrorInterfaces from "interfaces/ErrorInterfaces";
-import ClickupRequest_ from "Request";
-
-export const getTasksByListId_ = (request: ClickupRequest_, path: string) => {
-  return request.get_(path);
-};
-
-export const getTaskByTaskId_ = (request) => {
-  return request.get_();
-};
-
-export const createTaskInList_ = (request, payLoad) => {
-  return request.post_(payLoad);
-};
-
-export const updateTaskByTaskId_ = (request, payLoad) => {
-  return request.put_(payLoad);
-};
-
-export const deleteTaskByTaskId_ = (request) => {
-  return request.delete_();
-};
 
 /**
  * The Tasks class wraps Clickup's Tasks API.
@@ -108,5 +87,10 @@ export default class Tasks {
 
   public updateTask(taskId: string, payload: TaskInterfaces.ClickupTaskPayload): TaskInterfaces.ClickupTask {
     return this.clickupClient._request.put_(payload, `task/${taskId}`);
+  }
+
+  public deleteTaskByTaskId(taskId: string): {} | ErrorInterfaces.TaskError {
+    if (!taskId) return { err: "Invalid Task ID", ECODE: "INPUT_ex0001" };
+    return this.clickupClient._request.delete_(`task/${taskId}`);
   }
 }
