@@ -3,11 +3,18 @@
     "@types/google-apps-script": "^0.0.62"
   },
   "devDependencies": {
-    "cz-conventional-changelog": "^3.0.2"
+    "@google/clasp": "^2.3.0",
+    "@types/jest": "^26.0.14",
+    "cz-conventional-changelog": "^3.0.2",
+    "jest": "^26.4.2",
+    "ts-jest": "^26.4.1"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "scripts": {
+    "test": "jest"
   }
 }

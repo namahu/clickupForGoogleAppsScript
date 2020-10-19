@@ -1,82 +1,122 @@
-type Method = 'get' | 'post' | 'put' | 'delete';
+type Method = "get" | "post" | "put" | "delete";
 
 interface Options {
-    method?: Method;
-    headers: {
-        'Content-Type': string;
-        'Authorization': string;
+  method?: Method;
+  headers: {
+    "Content-Type": string;
+    Authorization: string;
+  };
+  contentType: string;
+  payload?: string;
+  muteHttpExceptions: boolean;
+}
+
+export default class ClickupRequest_ {
+  private readonly apiToken: string;
+  private readonly baseURL: string;
+
+  constructor(baseURL: string, apiToken: string) {
+    this.apiToken = apiToken;
+    this.baseURL = baseURL;
+  }
+
+  /**
+   * Function that connects base url and path
+   *
+   * @param path - the path to API
+   * @returns - Created endpoint
+   *
+   */
+  createEndpoint_(path: string): string {
+    return `${this.baseURL}${path}`;
+  }
+
+  get_(path: string) {
+    const options: Options = {
+      headers: {
+        Authorization: this.apiToken,
+        "Content-Type": "application/json",
+      },
+      contentType: "application/json",
+      muteHttpExceptions: true,
     };
-    payload?: string;
-    muteHttpExceptions: boolean;
+    const url: string = this.createEndpoint_(path);
+    const response = UrlFetchApp.fetch(url, options);
+    
+    const responseObj = JSON.parse(response.getContentText());
 
-};
-
-class ClickupRequest_ {
-    url: string;
-    apiToken: string;
-    options: Options;
-
-    constructor(url: string, apiToken: string, options?: Options) {
-        this.url = url;
-        this.options = options || {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': apiToken
-            },
-            muteHttpExceptions: true
-        };
+    if (responseObj.error) {
+      throw new Error(responseObj.error.message);
     }
 
-    get_() {
-        this.options.method = 'get';
-        const response = UrlFetchApp.fetch(this.url, this.options);
-        const responseObj = JSON.parse(response.getContentText());
+    return responseObj;
+  }
 
-        if (responseObj.error) {
-            throw new Error(responseObj.error.message);
-        }
+  post_(payLoad, path: string) {
+    const options: Options = {
+      method: "post",
+      headers: {
+        Authorization: this.apiToken,
+        "Content-Type": "application/json",
+      },
+      payload: JSON.stringify(payLoad),
+      contentType: "application/json",
+      muteHttpExceptions: true,
+    };
 
-        return responseObj;
+    const url: string = this.createEndpoint_(path);
+    const response = UrlFetchApp.fetch(url, options);
+    const responseObj = JSON.parse(response.getContentText());
+
+    if (responseObj.error) {
+      throw new Error(responseObj.error.message);
     }
 
-    post_(payLoad) {
-        this.options.method = 'post';
-        this.options.payload = JSON.stringify(payLoad);
+    return responseObj;
+  }
 
-        const response = UrlFetchApp.fetch(this.url, this.options);
-        const responseObj = JSON.parse(response.getContentText());
+  put_(payLoad, path: string) {
+    const options: Options = {
+      method: "post",
+      headers: {
+        Authorization: this.apiToken,
+        "Content-Type": "application/json",
+      },
+      payload: JSON.stringify(payLoad),
+      contentType: "application/json",
+      muteHttpExceptions: true,
+    };
 
-        if (responseObj.error) {
-            throw new Error(responseObj.error.message);
-        }
+    const url: string = this.createEndpoint_(path);
+    const response = UrlFetchApp.fetch(url, options);
+    const responseObj = JSON.parse(response.getContentText());
 
-        return responseObj;
+    if (responseObj.error) {
+      throw new Error(responseObj.error.message);
     }
 
-    put_(payLoad) {
-        this.options.method = 'put';
-        this.options.payload = JSON.stringify(payLoad);
+    return responseObj;
+  }
 
-        const response = UrlFetchApp.fetch(this.url, this.options);
-        const responseObj = JSON.parse(response.getContentText());
+  delete_(path: string) {
+    const options: Options = {
+      method: "delete",
+      headers: {
+        Authorization: this.apiToken,
+        "Content-Type": "application/json",
+      },
+      contentType: "application/json",
+      muteHttpExceptions: true,
+    };
 
-        if (responseObj.error) {
-            throw new Error(responseObj.error.message);
-        }
+    const url: string = this.createEndpoint_(path);
+    const response = UrlFetchApp.fetch(url, options);
+    const responseObj = JSON.parse(response.getContentText());
 
-        return responseObj;
+    if (responseObj.error) {
+      throw new Error(responseObj.error.message);
     }
 
-    delete_() {
-        this.options.method = 'delete';
-
-        const response = UrlFetchApp.fetch(this.url, this.options);
-        const responseObj = JSON.parse(response.getContentText());
-
-        if (responseObj.error) {
-            throw new Error(responseObj.error.message);
-        }
-
-        return response.getResponseCode();
-    }
+    return response.getResponseCode();
+  }
 }

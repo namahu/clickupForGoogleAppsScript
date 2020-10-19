@@ -1,72 +1,59 @@
+import Tasks from "./Tasks";
+import Teams from "./Teams";
+import ClickupRequest_ from "./Request";
+
 /**
- * Get Clickup object using Personal API toke.
+ * Get Clickup object using Personal API token.
  *
  * @param apiToken - Clickup personal API token
  * @returns - CLickup object
  *
  */
-const getClickup = (apiToken: string): object => {
-    return new Clickup_(apiToken);
+const getClickup = (apiToken: string): Clickup => {
+  return new Clickup(apiToken);
 };
 
-class Clickup_ {
-    apiToken: string;
+export default class Clickup {
+  readonly apiToken: string;
+  readonly baseURL: string = "https://api.clickup.com/api/v2/";
+  _request: ClickupRequest_;
 
-    constructor (apiToken: string) {
-        this.apiToken = apiToken;
-    }
+  Tasks: Tasks = new Tasks(this);
+  Teams: Teams = new Teams(this);
 
-    baseURL: string = 'https://api.clickup.com/api/v2/';
+  constructor(apiToken: string) {
+    this.apiToken = apiToken;
+    this._request = new ClickupRequest_(this.baseURL, apiToken);
+  }
 
-    /**
-     * Function that connects base url and path
-     *
-     * @param path - the path to API
-     * @returns - Created endpoint
-     *
-     */
-    createEndpoint_(path: string): string {
-        return `${this.baseURL}${path}`;
-    }
+  /**
+   * Get a specific list of tasks
+   *
+   * @param listId - ID of list to get task
+   * @param archive - Flag to include archived tasks
+   */
+  // getTasksByListId(listId: string, archived: boolean = false) {
+  //   const path: string = `list/${listId}/task?archived=${archived}`;
+  //   return this._request.get_(path);
+  // }
 
-    /**
-     * Get a specific list of tasks
-     *
-     * @param listId - ID of list to get task
-     * @param archive - Flag to include archived tasks
-     */
-    getTasksByListId(listId: string, archived: boolean = false) {
-        const path: string = `list/${listId}/task?archived=${archived}`;
-        const url: string = this.createEndpoint_(path);
-        const request = new ClickupRequest_(url, this.apiToken);
-        return getTasksByListId_(request);
-    }
+  // getTaskByTaskId(taskId: string) {
+  //   const path: string = `task/${taskId}`;
+  //   return this._request.get_(path);
+  // }
 
-    getTaskByTaskId(taskId: string) {
-        const path: string = `task/${taskId}`;
-        const url: string = this.createEndpoint_(path);
-        const request = new ClickupRequest_(url, this.apiToken);
-        return getTaskByTaskId_(request);
-    }
+  // createTaskInList(listId: string, payLoad) {
+  //   const path: string = `list/${listId}/task`;
+  //   return this._request.post_(payLoad, path);
+  // }
 
-    createTaskInList(listId: string, payLoad) {
-        const path: string = `list/${listId}/task`;
-        const url: string = this.createEndpoint_(path);
-        const request = new ClickupRequest_(url, this.apiToken);
-        return createTaskInList_(request, payLoad);
-    }
+  // updateTaskByTaskId(taskId: string, payLoad) {
+  //   const path: string = `task/${taskId}`;
+  //   return this._request.put_(payLoad, path);
+  // }
 
-    updateTaskByTaskId(taskId: string, payLoad) {
-        const path: string = `task/${taskId}`;
-        const url: string = this.createEndpoint_(path);
-        const request = new ClickupRequest_(url, this.apiToken);
-        return updateTaskByTaskId_(request, payLoad);
-    }
-
-    deleteTaskByTaskId(taskId: string) {
-        const path: string = `task/${taskId}`;
-        const url: string = this.createEndpoint_(path);
-        const request = new ClickupRequest_(url, this.apiToken);
-        return deleteTaskByTaskId_(request);
-    }
-};
+  // deleteTaskByTaskId(taskId: string) {
+  //   const path: string = `task/${taskId}`;
+  //   return this._request.delete_(path);
+  // }
+}
