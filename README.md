@@ -2,7 +2,12 @@
 
 clickupForGoogleAppsScript is a library that uses Clickup API in Google Apps Script.
 
-Currently, only task operations are implemented.
+Clickup API docs: [https://clickup.com/api](https://clickup.com/api)
+
+## Current Implementation
+
+- Tasks
+- Teams
 
 ## How to add a library
 
@@ -18,31 +23,23 @@ Currently, only task operations are implemented.
 ```javascript
 
 // Get Clickup object from library using Clickup personal API token
-const clickup = Clickup.getClickup('Enter your Clickup personal API token');
+const clickup = Clickup.getClickup("Enter your Clickup personal API token");
 
-// Get tasks of specified list
-const tasks = clickup.getTasksByListId(`Enter list id`);
+// Get task from task id.
+const task = clickup.Tasks.getTaskByTaskId("Enter task id");
 
-// Get task specified by task ID
-const task = clickup.getTaskByTaskId(`Enter task id`);
+// Get tasks from list id.
+const tasks = clickup.Tasks.getTasksByListId("Enter list id");
 
-const payload = {
-    'name': 'task name',
-    'content': 'task description',
-    ...
-};
-
-// Create a task in the specified list
-clickup.createTaskInList(`Enter list id`, payload);
-
-// Update task
-clickup.updateTaskByTaskId('Enter task id', payload);
-
-// Delete task
-clickup.deleteTaskByTaskId('Enter task id');
+// Get your teams.
+const teams = clickup.teams.getTeams();
 
 ```
 
-License
+## Author
+
+- namahu
+
+## License
 
 - MIT
