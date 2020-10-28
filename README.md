@@ -32,7 +32,7 @@ const task = clickup.Tasks.getTaskByTaskId("Enter task id");
 const tasks = clickup.Tasks.getTasksByListId("Enter list id");
 
 // Get your teams.
-const teams = clickup.teams.getTeams();
+const teams = clickup.Teams.getTeams();
 
 ```
 
