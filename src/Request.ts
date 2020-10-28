@@ -77,7 +77,7 @@ export default class ClickupRequest_ {
 
   put_(payLoad, path: string) {
     const options: Options = {
-      method: "post",
+      method: "put",
       headers: {
         Authorization: this.apiToken,
         "Content-Type": "application/json",
