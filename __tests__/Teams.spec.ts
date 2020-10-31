@@ -1,4 +1,4 @@
-import { ClickupTeam } from "Teams";
+import { ClickupTeam } from "../src/Teams/Teams";
 import Clickup_ from "../src/Clickup";
 import Request from "../src/Request";
 

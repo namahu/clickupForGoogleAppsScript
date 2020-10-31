@@ -1,5 +1,5 @@
-import Tasks from "./Tasks";
-import Teams from "./Teams";
+import Tasks from "./Tasks/Tasks";
+import Teams from "./Teams/Teams";
 import ClickupRequest_ from "./Request";
 
 /**
