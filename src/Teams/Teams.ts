@@ -1,6 +1,5 @@
-import Clickup_ from "Clickup";
+import { Clickup } from "Clickup";
 import { TeamMember } from "types";
-import ClickupRequest_ from "./Request";
 
 export interface ClickupTeam {
   id: string;
@@ -11,10 +10,10 @@ export interface ClickupTeam {
 }
 
 export default class Teams {
-  clickupClient: Clickup_;
+  clickupClient: Clickup;
   clickupTeams: ClickupTeam[];
 
-  constructor(clickupClient: Clickup_) {
+  constructor(clickupClient: Clickup) {
     this.clickupClient = clickupClient;
   }
 

@@ -1,4 +1,4 @@
-import Clickup from "Clickup";
+import { Clickup } from "Clickup";
 import * as TaskInterfaces from "interfaces/TaskInterfaces";
 import * as ErrorInterfaces from "interfaces/ErrorInterfaces";
 
