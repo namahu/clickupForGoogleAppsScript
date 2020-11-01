@@ -55,9 +55,6 @@ const createMockFetch = (expectedValue) => {
 
 
 describe("Testing the Tasks class", () => {
-  beforeEach(() => {
-    UrlFetchApp.fetch = null;
-  });
 
   it("The getTaskByTaskId() method can retrieve the task", () => {
     const mockFetch = createMockFetch(expectedValue);
@@ -119,66 +116,6 @@ describe("Testing the Tasks class", () => {
       expect(calls[0][0]).toContain("subtasks=true");
 
       expect(actual).toEqual({ tasks: [expectedValue] });
-    })
-  })
-
-  // describe("Testing the createTaskInList()", () => {
-  //   const payload: ClickupTaskPayload = {
-  //     "description": "New Task Description",
-  //     "assignees": [183],
-  //     "tags": ["tag name 1"],
-  //     "status": "Open",
-  //     "priority": 3,
-  //     "due_date": 1508369194377,
-  //     "due_date_time": false,
-  //     "time_estimate": 8640000,
-  //     "start_date": 1567780450202,
-  //     "start_date_time": false,
-  //     "notify_all": true,
-  //     "parent": null,
-  //     "links_to": null,
-  //     "custom_fields": [
-  //         {
-  //           "id": "0a52c486-5f05-403b-b4fd-c512ff05131c",
-  //           "value": 23
-  //         },
-  //         {
-  //           "id": "03efda77-c7a0-42d3-8afd-fd546353c2f5",
-  //           "value": "Text field input"
-  //         }
-  //     ]
-  //   };
-  //   it("This method can create tasks in a specified list.", () => {
-  //     const mockPost = jest
-  //       .spyOn(Request.prototype, "post_")
-  //       .mockReturnValue(expectedValue);
-
-  //     expect(mockPost).not.toHaveBeenCalled();
-  //     expect(clickup.Tasks.createTaskInList(111, "sample task", payload)).toEqual(expectedValue);
-  //     expect(mockPost).toHaveBeenCalled();
-  //   });
-
-  //   it("Returns an error if the task name is empty.", () => {
-  //     const expectedError: TaskError = {
-  //       err: "Task name invalid",
-  //       ECODE: "INPUT_005"
-  //     };
-  //     expect(clickup.Tasks.createTaskInList(111, "")).toEqual(expectedError);
-  //   });
-  // });
-
-  // describe("Testing the updateTask()", () => {
-  //   const mockPut = jest.spyOn(Request.prototype, "put_").mockReturnValue(expectedValue);
-  //   const updatePayload: ClickupTaskPayload = { name: "update Task name"};
-  //   it("This method can update the task for a given ID.", () => {
-  //     const taskId: string = "9hx"
-  //     expect(mockPut).not.toHaveBeenCalled();
-  //     expect(clickup.Tasks.updateTask(taskId, updatePayload)).toEqual(expectedValue);
-  //     expect(mockPut).toHaveBeenCalled();
-  //   })
-
-  //   it("If the second argument is absent or empty, an error is returned", () => {
-
-  //   }))
-  // })
+    });
+  });
 });
