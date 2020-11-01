@@ -1,10 +1,10 @@
-import Clickup from "../../src/Clickup";
+import getClickup, { Clickup } from "../../src/Clickup";
 import Request from "../../src/Request";
 import { ClickupTask, ClickupTaskPayload, ClickupTasks, TaskFilteredQueries } from "interfaces/TaskInterfaces";
 import { TaskError } from "interfaces/ErrorInterfaces";
-import MockHTTPResponse from "../Mock/MockHttpResponse";
+import { createMockFetch } from "../Mock/MockFunction";
 
-const clickup: Clickup = new Clickup("test_token");
+const clickup: Clickup = getClickup("test_token");
 
 const expectedValue: ClickupTask = {
   id: "9hx",
@@ -45,12 +45,6 @@ const expectedValue: ClickupTask = {
     id: "789",
   },
   url: "https://app.clickup.com/t/9hx",
-};
-
-const createMockFetch = (expectedValue) => {
-  return jest.fn(() => {
-    return new MockHTTPResponse(expectedValue);
-  });
 };
 
 

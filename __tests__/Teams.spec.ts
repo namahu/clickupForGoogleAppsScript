@@ -1,8 +1,8 @@
 import { ClickupTeam } from "../src/Teams/Teams";
-import Clickup_ from "../src/Clickup";
+import getClickup, { Clickup } from "../src/Clickup";
 import Request from "../src/Request";
 
-const clickup = new Clickup_("aaa");
+const clickup = getClickup("aaa");
 
 describe("Testing the Teams class", () => {
   it("Testing the getTeams() method", () => {
