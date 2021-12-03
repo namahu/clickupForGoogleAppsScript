@@ -13,7 +13,7 @@ Clickup API docs: [https://clickup.com/api](https://clickup.com/api)
 
 1. Open the script editor.
 1. Select a library from the resource menu.
-1. Enter `MWpr83H8HSn9MP0szQUnM8zG9S3INQskC` in the input field of "Add a library".
+1. Enter `1C7AvL6vODVFQTZKS2OvnPsTqoU9Si0nQDCbz7BNF46t8TrRLZIEp7bmM` in the input field of "Add a library".
 1. Click the "Add" button.
 1. Select the latest version.
 1. Click the "Save" button.
